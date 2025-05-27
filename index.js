@@ -7,13 +7,26 @@ import cors from 'cors';
 import userRoute from './routes/user.route.js'
 
 
+
 dotenv.config()
 
 const app = express()
+
+const allowedOrigin = process.env.FRONTEND_URL
+
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL
-}))
+    origin: allowedOrigin,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+
+
+
 app.use(express.json())
+
 
 
 const PORT = process.env.PORT || 4000
@@ -46,4 +59,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`BookStore server is listening on port ${PORT}`)
 })
-
